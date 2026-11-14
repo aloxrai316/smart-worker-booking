@@ -20,6 +20,10 @@ async function addColumn(table, column, ddl) {
       console.log('+ default categories');
     }
     console.log('✅ Migration complete');
-  } catch (e) { console.error('❌ Migration failed:', e.message); }
-  process.exit(0);
+  } catch (e) {
+    console.error('❌ Migration failed:', e.message);
+    process.exitCode = 1;
+  } finally {
+    await db.end();
+  }
 })();
